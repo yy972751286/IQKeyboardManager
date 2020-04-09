@@ -1349,7 +1349,11 @@ NSInteger const kIQPreviousNextButtonToolbarTag     =   -1005;
     
     //  Getting UIKeyboardSize.
     _kbFrame = [[aNotification userInfo][UIKeyboardFrameEndUserInfoKey] CGRectValue];
-
+    // fix _kbFrame negative y
+    if (_kbFrame.origin.y < 10) {
+         CGRect rootRact = [UIScreen mainScreen].bounds;
+         _kbFrame = CGRectMake(0, rootRact.size.height - _kbFrame.size.height, _kbFrame.size.width, _kbFrame.size.height);
+     }
     if ([self privateIsEnabled] == NO)
     {
         [self restorePosition];
